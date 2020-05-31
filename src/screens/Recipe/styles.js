@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   carouselContainer: {
-    minHeight: 250
+    minHeight: 250,
+    marginBottom:20
   },
   carousel: {},
 
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 25,
     marginTop: 20,
+    marginBottom:50,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
     marginRight: 0
   },
   infoRecipe: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 5,
   },
@@ -83,6 +85,45 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center'
+  },
+  //////////////////////////
+  root: {
+    backgroundColor: "#ffffff",
+    marginTop:30,
+  },
+  commentcontainer: {
+    paddingLeft: 19,
+    paddingRight: 16,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    alignItems: 'flex-start'
+  },
+  content: {
+    marginLeft: 16,
+    flex: 1,
+  },
+  contentHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#CCCCCC"
+  },
+  myimage:{
+    width:45,
+    height:45,
+    borderRadius:20,
+    marginLeft:20
+  },
+  time:{
+    fontSize:11,
+    color:"#808080",
+  },
+  name:{
+    fontSize:16,
+    fontWeight:"bold",
   }
 });
 

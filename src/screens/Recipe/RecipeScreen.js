@@ -17,6 +17,27 @@ import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIn
 
 const { width: viewportWidth } = Dimensions.get('window');
 
+const DATA = [
+  {
+    id: '1',
+    name: 'ㄴㅇㄹ',
+    text:'추천합니다',
+    created_at:'2019-10-09'
+  },
+  {
+    id: '2',
+    title: 'ㅁㄴㅇasdfasdfㄹ',
+    text: '추천합니다',
+    created_at:'2019-10-09'
+  },
+  {
+    id: '3',
+    title: 'ㅁㄴㅇㄹ',
+    text: '추천합니다',
+    created_at:'2019-10-09'
+  },
+];
+
 export default class RecipeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -31,13 +52,27 @@ export default class RecipeScreen extends React.Component {
     };
   };
 
+  
   constructor(props) {
     super(props);
     this.state = {
       activeSlide: 0
     };
   }
-
+  
+  renderComment = ({item}) =>(
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.contentHeader}>
+          <Text  style={styles.name}>{item.title}</Text>
+          <Text style={styles.time}>
+            {item.created_at}
+          </Text>
+        </View>
+        <Text rkType='primary3 mediumLine'>{item.text}</Text>
+      </View>
+    </View>
+  );
   renderImage = ({ item }) => (
     <TouchableHighlight>
       <View style={styles.imageContainer}>
@@ -96,18 +131,18 @@ export default class RecipeScreen extends React.Component {
         </View>
         <View style={styles.infoRecipeContainer}>
           <Text style={styles.infoRecipeName}>{item.title}</Text>
-          <View style={styles.infoContainer}>
+          {/* <View style={styles.infoContainer}>
             <TouchableHighlight
               onPress={() => navigation.navigate('RecipesList', { category, title })}
             >
               <Text style={styles.category}>{getCategoryName(item.categoryId).toUpperCase()}</Text>
             </TouchableHighlight>
-          </View>
+          </View> */}
 
-          <View style={styles.infoContainer}>
+          {/* <View style={styles.infoContainer}>
             <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
             <Text style={styles.infoRecipe}>{item.time} minutes </Text>
-          </View>
+          </View> */}
 
           <View style={styles.infoContainer}>
             <ViewIngredientsButton
@@ -122,7 +157,26 @@ export default class RecipeScreen extends React.Component {
             <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
           </View>
         </View>
+        <View>
+          <Text>추천합니다</Text>
+        <FlatList
+        style={styles.root}
+        data={DATA}
+        extraData={this.state}
+        ItemSeparatorComponent={() => {
+          return (
+            <View style={styles.separator}/>
+          )
+        }}
+        // keyExtractor={(item)=>{
+        //   return item.id;
+        // }}
+        renderItem={this.renderComment}
+        keyExtractor={item => `${item.id}`}
+            />
+      </View>
       </ScrollView>
+
     );
   }
 }
