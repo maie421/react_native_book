@@ -15,7 +15,10 @@ export default class HomeScreen extends React.Component {
           navigation.openDrawer();
         }}
       />
-    )
+    ),
+    // headerRight: <Icon name='ios-send' style={{ paddingRight:10 }}/>,
+    headerRight: <Text>qr</Text>,
+
   });
 
   constructor(props) {

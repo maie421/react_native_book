@@ -9,6 +9,7 @@ import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import HomeScreen from '../screens/Home/HomeScreen';
 import BookSCreen from '../screens/Book/BookScreen';
 import Recommend_BookScreen from '../screens/Recommend_Book/Recommend_BookScreen';
+import SinupScreen from '../screens/Sinup/SinupScreen';
 
 import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
@@ -16,6 +17,7 @@ import RecipeScreen from '../screens/Recipe/RecipeScreen';
 import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
+import LoginScreen from '../screens/Login/LoginScreen';
 
 
 /* const Stack = createStackNavigator();
@@ -46,14 +48,17 @@ function MainNavigator() {
 const MainNavigator = createStackNavigator(
   {
     Home: HomeScreen,
+    Book:BookSCreen,
+    Recommend_Book:Recommend_BookScreen,
+    Login:LoginScreen,
+    Sinup:SinupScreen,
+    
     Categories: CategoriesScreen,
     Recipe: RecipeScreen,
     RecipesList: RecipesListScreen,
     Ingredient: IngredientScreen,
     Search: SearchScreen,
     IngredientsDetails: IngredientsDetailsScreen,
-    Book:BookSCreen,
-    Recommend_Book:Recommend_BookScreen
   },
   {
     initialRouteName: 'Home',
