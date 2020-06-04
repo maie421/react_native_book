@@ -1,106 +1,50 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { RecipeCard } from '../../AppStyles_1';
 
-const { width: viewportWidth } = Dimensions.get('window');
+// const { width, height } = Dimensions.get('window');
+// orientation must fixed
+// const SCREEN_WIDTH = width < height ? width : height;
 
+const recipeNumColums = 2;
+// item size
+const RECIPE_ITEM_HEIGHT = 150;
+const RECIPE_ITEM_MARGIN = 20;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    flex: 1
+    flex: 1,
+    marginLeft: RECIPE_ITEM_MARGIN,
+    marginTop: 100,
+    height: RECIPE_ITEM_HEIGHT + 15,
+
+    
+  },
+  photo: RecipeCard.photo,
+  title: RecipeCard.title,
+  category: RecipeCard.category,
+  btnIcon: {
+    height: 14,
+    width: 14
   },
   carouselContainer: {
     minHeight: 250,
     marginBottom:20
   },
-  carousel: {},
-
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    height: 250
-  },
-  imageContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    width: viewportWidth,
-    height: 250
-  },
-  paginationContainer: {
-    flex: 1,
-    position: 'absolute',
-    alignSelf: 'center',
-    paddingVertical: 8,
-    marginTop: 200
-  },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 0
-  },
-  infoRecipeContainer: {
-    flex: 1,
-    margin: 25,
-    marginTop: 20,
-    marginBottom:50,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  infoContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  infoPhoto: {
-    height: 20,
-    width: 20,
-    marginRight: 0
-  },
-  infoRecipe: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 5,
-  },
-  category: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    margin: 10,
-    color: '#2cd18a'
-  },
-  infoDescriptionRecipe: {
-    textAlign: 'left',
-    fontSize: 16,
-    marginTop: 30,
-    margin: 15
-  },
-  infoRecipeName: {
-    fontSize: 28,
-    margin: 10,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'center'
-  },
-  //////////////////////////
+//////////////
+container_Side: {
+  flex: 1,
+  flexDirection:'row',
+},
+commentcontainer: {
+  flex: 2,
+  // backgroundColor: "#ffffff",
+},
   root: {
     backgroundColor: "#ffffff",
     marginTop:30,
   },
-  commentcontainer: {
-    paddingLeft: 19,
-    paddingRight: 16,
-    paddingVertical: 12,
-    flexDirection: 'row',
-    alignItems: 'flex-start'
-  },
   content: {
-    marginLeft: 16,
-    flex: 1,
+    marginTop:15,
+    borderColor:"#ffff",
   },
   contentHeader: {
     flexDirection: 'row',

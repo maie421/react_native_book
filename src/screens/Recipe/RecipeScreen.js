@@ -19,22 +19,35 @@ const { width: viewportWidth } = Dimensions.get('window');
 
 const DATA = [
   {
-    id: '1',
-    name: 'ㄴㅇㄹ',
-    text:'추천합니다',
-    created_at:'2019-10-09'
+    "authors": [
+        "Savitch",
+        "Mock"
+    ],
+    "contents": "Java: An Introduction to Problem Solving and Programming, 7e, is ideal for introductory Computer Science courses using Java, and other introductory programming courses in departments of Computer Science, Computer Engineering, CIS, MIS, IT, and Business.  Students",
+    "datetime": "2016-02-01T00:00:00.000+09:00",
+    "isbn": "129201833X 9781292018331",
+    "price": 40000,
+    "publisher": "Pearson",
+    "sale_price": 40000,
+    "status": "정상판매",
+    "thumbnail": "https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F3383739%3Ftimestamp%3D20190220072908",
+    "title": "Java",
+    "translators": [],
+    "url": "https://search.daum.net/search?w=bookpage&bookId=3383739&q=Java"
+},
+];
+const story = [
+  {
+    title:'그려',
+    body:'추천합니다',
   },
   {
-    id: '2',
-    title: 'ㅁㄴㅇasdfasdfㄹ',
-    text: '추천합니다',
-    created_at:'2019-10-09'
+    title:'그려',
+    body: '추천합니다',
   },
   {
-    id: '3',
-    title: 'ㅁㄴㅇㄹ',
-    text: '추천합니다',
-    created_at:'2019-10-09'
+    title:'그려',
+    body: '추천합니다',
   },
 ];
 
@@ -59,9 +72,9 @@ export default class RecipeScreen extends React.Component {
       activeSlide: 0
     };
   }
-  
+    
   renderComment = ({item}) =>(
-    <View style={styles.container}>
+    <View >
       <View style={styles.content}>
         <View style={styles.contentHeader}>
           <Text  style={styles.name}>{item.title}</Text>
@@ -69,114 +82,53 @@ export default class RecipeScreen extends React.Component {
             {item.created_at}
           </Text>
         </View>
-        <Text rkType='primary3 mediumLine'>{item.text}</Text>
+        <Text rkType='primary3 mediumLine'>{item.body}</Text>
       </View>
     </View>
   );
-  renderImage = ({ item }) => (
-    <TouchableHighlight>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: item }} />
-      </View>
-    </TouchableHighlight>
-  );
 
-  onPressIngredient = item => {
-    var name = getIngredientName(item);
-    let ingredient = item;
-    this.props.navigation.navigate('Ingredient', { ingredient, name });
-  };
+  // renderImage = ({ item }) => (
+  //   <TouchableHighlight>
+  //     <View style={styles.imageContainer}>
+  //       <Image style={styles.image} source={{ uri: item }} />
+  //     </View>
+  //   </TouchableHighlight>
+  // );
+
+  // onPressIngredient = item => {
+  //   var name = getIngredientName(item);
+  //   let ingredient = item;
+  //   this.props.navigation.navigate('Ingredient', { ingredient, name });
+  // };
 
   render() {
-    const { activeSlide } = this.state;
-    const { navigation } = this.props;
-    const item = navigation.getParam('item');
-    const category = getCategoryById(item.categoryId);
-    const title = getCategoryName(category.id);
+
+    // const item = navigation.getParam('item');
+    // const category = getCategoryById(item.categoryId);
+    // const title = getCategoryName(category.id);
 
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.carouselContainer}>
-          <View style={styles.carousel}>
-            <Carousel
-              ref={c => {
-                this.slider1Ref = c;
-              }}
-              data={item.photosArray}
-              renderItem={this.renderImage}
-              sliderWidth={viewportWidth}
-              itemWidth={viewportWidth}
-              inactiveSlideScale={1}
-              inactiveSlideOpacity={1}
-              firstItem={0}
-              loop={false}
-              autoplay={false}
-              autoplayDelay={500}
-              autoplayInterval={3000}
-              onSnapToItem={index => this.setState({ activeSlide: index })}
-            />
-            <Pagination
-              dotsLength={item.photosArray.length}
-              activeDotIndex={activeSlide}
-              containerStyle={styles.paginationContainer}
-              dotColor="rgba(255, 255, 255, 0.92)"
-              dotStyle={styles.paginationDot}
-              inactiveDotColor="white"
-              inactiveDotOpacity={0.4}
-              inactiveDotScale={0.6}
-              carouselRef={this.slider1Ref}
-              tappableDots={!!this.slider1Ref}
-            />
-          </View>
-        </View>
-        <View style={styles.infoRecipeContainer}>
-          <Text style={styles.infoRecipeName}>{item.title}</Text>
-          {/* <View style={styles.infoContainer}>
-            <TouchableHighlight
-              onPress={() => navigation.navigate('RecipesList', { category, title })}
-            >
-              <Text style={styles.category}>{getCategoryName(item.categoryId).toUpperCase()}</Text>
-            </TouchableHighlight>
-          </View> */}
+      <View style={styles.container}>
+        <View style={styles.container_Side}>
+            <Image style={styles.photo} source={{ uri: 'https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1231043%3Ftimestamp%3D20200520125904' }} />
+            <View >
+              <Text style={styles.title}>제목 : 안녕</Text>
+              <Text style={styles.title}>저자 : 나여</Text>
 
-          {/* <View style={styles.infoContainer}>
-            <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
-            <Text style={styles.infoRecipe}>{item.time} minutes </Text>
-          </View> */}
-
-          <View style={styles.infoContainer}>
-            <ViewIngredientsButton
-              onPress={() => {
-                let ingredients = item.ingredients;
-                let title = 'Ingredients for ' + item.title;
-                navigation.navigate('IngredientsDetails', { ingredients, title });
-              }}
-            />
-          </View>
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
-          </View>
+            </View>
+          {/* <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text> */}
         </View>
-        <View>
-          <Text>추천합니다</Text>
+        <View style={styles.commentcontainer}>
+        <Text style={styles.title}>추천합니다.</Text>
         <FlatList
-        style={styles.root}
-        data={DATA}
-        extraData={this.state}
-        ItemSeparatorComponent={() => {
-          return (
-            <View style={styles.separator}/>
-          )
-        }}
-        // keyExtractor={(item)=>{
-        //   return item.id;
-        // }}
-        renderItem={this.renderComment}
-        keyExtractor={item => `${item.id}`}
-            />
+          vertical
+          showsVerticalScrollIndicator={false}
+          data={story}
+          renderItem={this.renderComment}
+        //   keyExtractor={item => `${item.id}`}
+        />
+        </View>
       </View>
-      </ScrollView>
-
     );
   }
 }
