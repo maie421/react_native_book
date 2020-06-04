@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { getRecipes, getCategoryName } from '../../data/MockDataAPI';
+import axios from 'axios'
 
 const DATA = [
     {
@@ -43,6 +44,26 @@ export default class RecipesListScreen extends React.Component {
     };
   };
 
+  componentDidMount() {
+
+    axios({
+      method: 'get',
+      url: 'https://dapi.kakao.com/v3/search/book?target=publisher&query=한빛',
+      headers: {
+        Authorization:"KakaoAK 2b99240d5f8a380a7d9443e1f210d0bc",
+        Host:"dapi.kakao.com",
+      },
+    //  params: {
+      //  category_id: 3,
+        // page: this.page,
+      // },
+    }).then(response => {
+      console.log(response.data);
+    }).catch(error => {
+      console.log(error);
+    });
+
+  }
   constructor(props) {
     super(props);
   }

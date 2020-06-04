@@ -56,8 +56,8 @@ export default class RecipesListScreen extends React.Component {
       <View style={styles.container}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <View style={styles.container_Side}>
-        <Text style={styles.title}>제목 : {item.title}</Text>
-        <Text style={styles.title}>저자 : {item.author}</Text>
+          <Text style={styles.title}>제목 : {item.title}</Text>
+          <Text style={styles.title}>저자 : {item.author}</Text>
         </View>
         {/* <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text> */}
       </View>
