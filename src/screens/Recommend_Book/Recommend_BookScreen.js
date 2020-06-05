@@ -77,6 +77,7 @@ export default class RecipesListScreen extends React.Component {
           renderItem={this.renderRecipes}
         //   keyExtractor={item => `${item.id}`}
         />
+        
       </View>
     );
   }

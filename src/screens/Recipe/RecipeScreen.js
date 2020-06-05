@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  TouchableHighlight
+  TouchableHighlight,
+  TextInput ,
+  Button
 } from 'react-native';
 import styles from './styles';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
@@ -40,6 +42,22 @@ const story = [
   {
     title:'그려',
     body:'추천합니다',
+  },
+  {
+    title:'그려',
+    body: '추천합니다',
+  },
+  {
+    title:'그려',
+    body: '추천합니다',
+  },
+  {
+    title:'그려',
+    body: '추천합니다',
+  },
+  {
+    title:'그려',
+    body: '추천합니다',
   },
   {
     title:'그려',
@@ -102,19 +120,18 @@ export default class RecipeScreen extends React.Component {
   // };
 
   render() {
-
-    // const item = navigation.getParam('item');
+    const { navigation } = this.props;
+    const item = navigation.getParam('item');
     // const category = getCategoryById(item.categoryId);
     // const title = getCategoryName(category.id);
 
     return (
       <View style={styles.container}>
         <View style={styles.container_Side}>
-            <Image style={styles.photo} source={{ uri: 'https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1231043%3Ftimestamp%3D20200520125904' }} />
+            <Image style={styles.photo} source={{ uri: item.thumbnail }} />
             <View >
-              <Text style={styles.title}>제목 : 안녕</Text>
-              <Text style={styles.title}>저자 : 나여</Text>
-
+              <Text style={styles.title}>제목 : {item.title}</Text>
+              <Text style={styles.title}>저자 : {item.publisher}</Text>
             </View>
           {/* <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text> */}
         </View>
@@ -127,6 +144,19 @@ export default class RecipeScreen extends React.Component {
           renderItem={this.renderComment}
         //   keyExtractor={item => `${item.id}`}
         />
+        </View>
+        <View style={styles.container_input}>
+        <TextInput  
+            
+            style={styles.inputText}
+            placeholder="후기를 적어주세요..." 
+            placeholderTextColor="#8C8C8C"
+            onChangeText={text => this.setState({text})}/>
+          <View style={styles.container_loginBtn}>
+          <TouchableOpacity style={styles.loginBtn} onPress={() => {this.Login()}}>
+            <Text style={styles.loginText}>추가</Text>
+          </TouchableOpacity>
+        </View>
         </View>
       </View>
     );

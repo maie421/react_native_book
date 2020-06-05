@@ -36,6 +36,31 @@ container_Side: {
 },
 commentcontainer: {
   flex: 2,
+  marginTop:30,
+  // backgroundColor: "#ffffff",
+},
+container_input:{
+  flex: 0.8,
+  marginTop:20,
+},
+loginBtn:{
+  width:"20%",
+  backgroundColor:"#1DDB16",
+  borderRadius:25,
+  height:30,
+  alignItems:"center",
+  justifyContent:"center",
+  marginTop:10,
+
+  // marginBottom:10
+},
+container_loginBtn:{
+  // backgroundColor: "#ffffff",
+  alignItems: 'flex-end'
+},
+inputText:{
+  // flex:1,
+  fontSize:18,
   // backgroundColor: "#ffffff",
 },
   root: {
