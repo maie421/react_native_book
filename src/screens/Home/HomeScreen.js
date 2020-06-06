@@ -52,8 +52,8 @@ export default class SearchScreen extends React.Component {
       
       headerRight:(
       <MaterialCommunityIcons 
-        onPress={() => alert('This is a button!')}
-        // onPress={() => navigation.navigate('Login')}
+        // onPress={() => alert('This is a button!')}
+        onPress={() => navigation.navigate('BarCode')}
         name="barcode-scan" 
         size={30} 
         color="black"
