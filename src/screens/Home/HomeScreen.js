@@ -9,13 +9,8 @@ import {
 import styles from './styles';
 import { ListItem, SearchBar } from 'react-native-elements';
 import MenuImage from '../../components/MenuImage/MenuImage';
-import {
-  getCategoryName,
-  getRecipesByRecipeName,
-  getRecipesByCategoryName,
-  getRecipesByIngredientName
-} from '../../data/MockDataAPI';
 import axios from 'axios';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default class SearchScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -53,7 +48,17 @@ export default class SearchScreen extends React.Component {
           placeholder="Search"
           value={params.data}
         />
-      )
+      ),
+      
+      headerRight:(
+      <MaterialCommunityIcons 
+        onPress={() => alert('This is a button!')}
+        // onPress={() => navigation.navigate('Login')}
+        name="barcode-scan" 
+        size={30} 
+        color="black"
+        />
+        ),
     };
   };
 
