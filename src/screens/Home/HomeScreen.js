@@ -111,8 +111,8 @@ export default class SearchScreen extends React.Component {
       },
     }).then(response => {
       data=response.data.documents;
+      console.log({data});
         this.setState({data});
-        console.log(response);
     }).catch(error => {
       console.log(error);
     });
@@ -133,6 +133,7 @@ export default class SearchScreen extends React.Component {
 
   onPressRecipe = item => {
     this.props.navigation.navigate('Recipe', { item });
+    console.log({item});
   };
 
   renderRecipes = ({ item }) => (

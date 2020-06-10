@@ -124,7 +124,7 @@ export default class RecipeScreen extends React.Component {
     const item = navigation.getParam('item');
     // const category = getCategoryById(item.categoryId);
     // const title = getCategoryName(category.id);
-
+    console.log(item);
     return (
       <View style={styles.container}>
         <View style={styles.container_Side}>
