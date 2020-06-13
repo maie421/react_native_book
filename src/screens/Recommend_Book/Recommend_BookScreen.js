@@ -39,7 +39,7 @@ const DATA = [
 export default class RecipesListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('title')
+      title: "책 추천"
     };
   };
 
@@ -48,7 +48,7 @@ export default class RecipesListScreen extends React.Component {
   }
 
   onPressRecipe = item => {
-    this.props.navigation.navigate('Recipe', { item });
+    this.props.navigation.navigate('Book', { item });
   };
 
   renderRecipes = ({ item }) => (

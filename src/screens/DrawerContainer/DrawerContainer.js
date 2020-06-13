@@ -19,15 +19,7 @@ export default class DrawerContainer extends React.Component {
             }}
           />
           <MenuButton
-            title="Book"
-            source={require('../../../assets/icons/category.png')}
-            onPress={() => {
-              navigation.navigate('Book');
-              navigation.closeDrawer();
-            }}
-          />
-          <MenuButton
-            title="Recommend_Book"
+            title="책 추천"
             source={require('../../../assets/icons/search.png')}
             onPress={() => {
               navigation.navigate('Recommend_Book');
