@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginLeft: RECIPE_ITEM_MARGIN,
-    marginTop: 10,
+    marginTop: 85,
     height: RECIPE_ITEM_HEIGHT + 15,
 
     
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 container_Side: {
   flex: 1,
   flexDirection:'row',
+
 },
 commentcontainer: {
   flex: 2,
@@ -40,7 +41,7 @@ commentcontainer: {
   // backgroundColor: "#ffffff",
 },
 container_input:{
-  flex: 0.8,
+  flex: 0.5,
   marginTop:20,
 },
 loginBtn:{
@@ -53,6 +54,20 @@ loginBtn:{
   marginTop:10,
 
   // marginBottom:10
+},
+DeleteBtn:{
+  width:"13%",
+  backgroundColor:"#D7DF01",
+  borderRadius:25,
+  height:20,
+  alignItems:"center",
+  justifyContent:"center",
+  marginTop:10,
+  
+  
+},
+text:{
+  flex: 1,
 },
 container_loginBtn:{
   // backgroundColor: "#ffffff",

@@ -99,9 +99,14 @@ export default class RecipeScreen extends React.Component {
           <Text style={styles.time}>
             {item.created_at}
           </Text>
+        </View >
+          <Text rkType='primary3 mediumLine'>{item.body}</Text>
+          <View style={styles.container_loginBtn}>
+          <TouchableOpacity style={styles.DeleteBtn} onPress={() => {this.Login()}}>
+              <Text style={styles.loginText}>삭제</Text>
+          </TouchableOpacity>
+          </View>
         </View>
-        <Text rkType='primary3 mediumLine'>{item.body}</Text>
-      </View>
     </View>
   );
 
@@ -147,7 +152,6 @@ export default class RecipeScreen extends React.Component {
         </View>
         <View style={styles.container_input}>
         <TextInput  
-            
             style={styles.inputText}
             placeholder="후기를 적어주세요..." 
             placeholderTextColor="#8C8C8C"
