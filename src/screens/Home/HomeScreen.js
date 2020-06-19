@@ -133,7 +133,6 @@ export default class SearchScreen extends React.Component {
 
   onPressRecipe = item => {
     this.props.navigation.navigate('Book', { item });
-    console.log({item});
   };
 
   renderRecipes = ({ item }) => (

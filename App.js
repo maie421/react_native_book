@@ -1,9 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import AppContainer from './src/navigations/AppNavigation';
+import ApolloClient from "apollo-boost"
+import { ApolloProvider } from "react-apollo"
 
-export default function App() {
+const client = new ApolloClient({
+  uri: "http://565ab56348fc.ngrok.io/graphql",
+})
+
+export default function App(props) {
   return (
-     <AppContainer />
+     <ApolloProvider client={client}>
+        <AppContainer/>
+     </ApolloProvider>
   );
 }
+
+

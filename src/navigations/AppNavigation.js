@@ -11,7 +11,6 @@ import BookSCreen from '../screens/Book/BookScreen';
 import Recommend_BookScreen from '../screens/Recommend_Book/Recommend_BookScreen';
 import SinupScreen from '../screens/Sinup/SinupScreen';
 
-import RecipeScreen from '../screens/Recipe/RecipeScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
 import BarCodeScannerScreen from '../screens/BarCodeScanner/BarCodeScannerScreen';
 
@@ -48,7 +47,6 @@ const MainNavigator = createStackNavigator(
     Recommend_Book:Recommend_BookScreen,
     Login:LoginScreen,
     Sinup:SinupScreen,
-    Recipe: RecipeScreen,
   },
   {
     initialRouteName: 'Home',

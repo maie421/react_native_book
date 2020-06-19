@@ -1,43 +1,19 @@
 import React from 'react';
 import {
   FlatList,
-  ScrollView,
   Text,
   View,
   TouchableOpacity,
   Image,
-  Dimensions,
-  TouchableHighlight,
-  TextInput ,
-  Button
+  TextInput, 
+  ToastAndroid,
 } from 'react-native';
 import styles from './styles';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { getIngredientName, getCategoryName, getCategoryById } from '../../data/MockDataAPI';
 import BackButton from '../../components/BackButton/BackButton';
-import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIngredientsButton';
 
-const { width: viewportWidth } = Dimensions.get('window');
+import { gql } from "apollo-boost";
+import { Query } from 'react-apollo';
 
-const DATA = [
-  {
-    "authors": [
-        "Savitch",
-        "Mock"
-    ],
-    "contents": "Java: An Introduction to Problem Solving and Programming, 7e, is ideal for introductory Computer Science courses using Java, and other introductory programming courses in departments of Computer Science, Computer Engineering, CIS, MIS, IT, and Business.  Students",
-    "datetime": "2016-02-01T00:00:00.000+09:00",
-    "isbn": "129201833X 9781292018331",
-    "price": 40000,
-    "publisher": "Pearson",
-    "sale_price": 40000,
-    "status": "정상판매",
-    "thumbnail": "https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F3383739%3Ftimestamp%3D20190220072908",
-    "title": "Java",
-    "translators": [],
-    "url": "https://search.daum.net/search?w=bookpage&bookId=3383739&q=Java"
-},
-];
 const story = [
   {
     title:'그려',
@@ -95,12 +71,12 @@ export default class RecipeScreen extends React.Component {
     <View >
       <View style={styles.content}>
         <View style={styles.contentHeader}>
-          <Text  style={styles.name}>{item.title}</Text>
+            <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.time}>
-            {item.created_at}
+            {item.updated_at}
           </Text>
         </View >
-          <Text rkType='primary3 mediumLine'>{item.body}</Text>
+          <Text rkType='primary3 mediumLine'>{item.text}</Text>
           <View style={styles.container_loginBtn}>
           <TouchableOpacity style={styles.DeleteBtn} onPress={() => {this.Login()}}>
               <Text style={styles.loginText}>삭제</Text>
@@ -110,42 +86,66 @@ export default class RecipeScreen extends React.Component {
     </View>
   );
 
-  // renderImage = ({ item }) => (
-  //   <TouchableHighlight>
-  //     <View style={styles.imageContainer}>
-  //       <Image style={styles.image} source={{ uri: item }} />
-  //     </View>
-  //   </TouchableHighlight>
-  // );
-
-  // onPressIngredient = item => {
-  //   var name = getIngredientName(item);
-  //   let ingredient = item;
-  //   this.props.navigation.navigate('Ingredient', { ingredient, name });
-  // };
-
+  createComment = (id) => {
+    let newObject
+    this.props.client.mutate({
+      variables: {name:"익명",text:"재미있습니다",book_id:1},
+      mutation: gql`
+        mutation createComment($name: String!, $rank: Int!){
+          createComment(input: {name: $name, rank: $rank}){
+            duelist {
+              name
+              rank
+            }
+          }    
+        }      
+      `
+    })
+    .then(result => {newObject = result})
+  }
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item');
-    // const category = getCategoryById(item.categoryId);
-    // const title = getCategoryName(category.id);
-    console.log(item);
     return (
-      <View style={styles.container}>
-        <View style={styles.container_Side}>
+      
+         <Query
+          query={
+            gql `
+            {
+              book(bookisnb:"123"){
+                id
+                suggest
+                comments{
+                  id
+                  text
+                  name
+                  updated_at
+                }
+            }
+          }
+            `
+          }
+        >
+        {({loading, error, data}) => {
+          if (loading) return <p>'Loading...'</p>
+          if (error) return <p>'Error! ${error.message}'</p>
+          //console.log(data.suggest);
+          return (
+          <View style={styles.container}>           
+            <View style={styles.container_Side}>
             <Image style={styles.photo} source={{ uri: item.thumbnail }} />
-            <View >
+            <View>
               <Text style={styles.title}>제목 : {item.title}</Text>
               <Text style={styles.title}>저자 : {item.publisher}</Text>
             </View>
           {/* <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text> */}
         </View>
         <View style={styles.commentcontainer}>
-        <Text style={styles.title}>추천합니다.</Text>
+        <Text style={styles.title}>{data.book.suggest}</Text>
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}
-          data={story}
+          data={data.book.comments}
           renderItem={this.renderComment}
         //   keyExtractor={item => `${item.id}`}
         />
@@ -155,22 +155,17 @@ export default class RecipeScreen extends React.Component {
             style={styles.inputText}
             placeholder="후기를 적어주세요..." 
             placeholderTextColor="#8C8C8C"
-            onChangeText={text => this.setState({text})}/>
+            onChangeText={comment => this.setState({comment})}/>
           <View style={styles.container_loginBtn}>
-          <TouchableOpacity style={styles.loginBtn} onPress={() => {this.Login()}}>
+          <TouchableOpacity style={styles.loginBtn} onPress={() => {this.getAllDuelists()}}>
             <Text style={styles.loginText}>추가</Text>
           </TouchableOpacity>
+          </View>
         </View>
         </View>
-      </View>
+          )
+        }}
+        </Query>
     );
   }
 }
-
-/*cooking steps
-<View style={styles.infoContainer}>
-  <Image style={styles.infoPhoto} source={require('../../../assets/icons/info.png')} />
-  <Text style={styles.infoRecipe}>Cooking Steps</Text>
-</View>
-<Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
-*/
