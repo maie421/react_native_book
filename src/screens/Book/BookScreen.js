@@ -10,9 +10,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 import BackButton from '../../components/BackButton/BackButton';
-
 import { gql } from "apollo-boost";
-import { Query } from 'react-apollo';
+import { Query ,Mutation,graphql} from 'react-apollo';
 
 const story = [
   {
@@ -44,7 +43,29 @@ const story = [
     body: '추천합니다',
   },
 ];
+const createComment = gql`
+mutation {
+  createComment(name:"익명",text:"d",book_id:1){
+    id
+    text
+  }
+}
 
+`
+const QueryCommnet=gql `
+{
+  book(bookisnb:"123"){
+    id
+    suggest
+    comments{
+      id
+      text
+      name
+      updated_at
+    }
+}
+}
+`
 export default class RecipeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -63,7 +84,9 @@ export default class RecipeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeSlide: 0
+      activeSlide: 0,
+      text:"",
+      name:"",
     };
   }
     
@@ -85,61 +108,27 @@ export default class RecipeScreen extends React.Component {
         </View>
     </View>
   );
-
-  createComment = (id) => {
-    let newObject
-    this.props.client.mutate({
-      variables: {name:"익명",text:"재미있습니다",book_id:1},
-      mutation: gql`
-        mutation createComment($name: String!, $rank: Int!){
-          createComment(input: {name: $name, rank: $rank}){
-            duelist {
-              name
-              rank
-            }
-          }    
-        }      
-      `
-    })
-    .then(result => {newObject = result})
-  }
   render() {
     const { navigation } = this.props;
+    console.log(this.props);
     const item = navigation.getParam('item');
     return (
-      
-         <Query
-          query={
-            gql `
-            {
-              book(bookisnb:"123"){
-                id
-                suggest
-                comments{
-                  id
-                  text
-                  name
-                  updated_at
-                }
-            }
-          }
-            `
-          }
-        >
-        {({loading, error, data}) => {
-          if (loading) return <p>'Loading...'</p>
-          if (error) return <p>'Error! ${error.message}'</p>
-          //console.log(data.suggest);
-          return (
-          <View style={styles.container}>           
-            <View style={styles.container_Side}>
-            <Image style={styles.photo} source={{ uri: item.thumbnail }} />
-            <View>
-              <Text style={styles.title}>제목 : {item.title}</Text>
-              <Text style={styles.title}>저자 : {item.publisher}</Text>
-            </View>
+      <View style={styles.container}>
+        <View style={styles.container_Side}>
+          <Image style={styles.photo} source={{ uri: item.thumbnail }} />
+          <View>
+            <Text style={styles.title}>제목 : {item.title}</Text>
+            <Text style={styles.title}>저자 : {item.publisher}</Text>
+          </View>
           {/* <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text> */}
         </View>
+         <Query
+          query={QueryCommnet}>
+        {({loading, error, data}) => {
+          if (loading) return <Text>'Loading...'</Text>
+          if (error) return <Text>'Error! ${error.message}'</Text>
+          //console.log(data.suggest);
+          return (
         <View style={styles.commentcontainer}>
         <Text style={styles.title}>{data.book.suggest}</Text>
         <FlatList
@@ -150,6 +139,9 @@ export default class RecipeScreen extends React.Component {
         //   keyExtractor={item => `${item.id}`}
         />
         </View>
+        )
+        }}
+        </Query>
         <View style={styles.container_input}>
         <TextInput  
             style={styles.inputText}
@@ -157,15 +149,26 @@ export default class RecipeScreen extends React.Component {
             placeholderTextColor="#8C8C8C"
             onChangeText={comment => this.setState({comment})}/>
           <View style={styles.container_loginBtn}>
-          <TouchableOpacity style={styles.loginBtn} onPress={() => {this.getAllDuelists()}}>
-            <Text style={styles.loginText}>추가</Text>
-          </TouchableOpacity>
+          <Mutation mutation={createComment}>
+          {(addDogMutation, { data }) => (
+            <TouchableOpacity style={styles.loginBtn} onPress={() => {
+              addDogMutation({
+              variables: {
+                comment: this.state.comment,
+                name: this.state.name,
+                id:1
+              }
+            })
+              .then(res => res)
+              .catch(err => <Text>{err}</Text>);
+            this.setState({ comment: '', name: '',id:'' });}}>
+              <Text style={styles.loginText}>추가</Text>
+            </TouchableOpacity>
+          )}
+          </Mutation>
           </View>
         </View>
-        </View>
-          )
-        }}
-        </Query>
+      </View>
     );
   }
 }
