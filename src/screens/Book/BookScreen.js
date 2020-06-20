@@ -44,12 +44,12 @@ const story = [
   },
 ];
 const createComment = gql`
-mutation {
-  createComment(name:"익명",text:"d",book_id:1){
-    id
-    text
-  }
-}
+mutation Comment($name: String, $text: String!,$book_id:ID!) {
+  createComment(name:$name,text: $text,book_id:$book_id){
+     id
+     text
+   }
+ }
 
 `
 const QueryCommnet=gql `
@@ -85,7 +85,7 @@ export default class RecipeScreen extends React.Component {
     super(props);
     this.state = {
       activeSlide: 0,
-      text:"",
+      comment:"",
       name:"",
     };
   }
@@ -147,16 +147,18 @@ export default class RecipeScreen extends React.Component {
             style={styles.inputText}
             placeholder="후기를 적어주세요..." 
             placeholderTextColor="#8C8C8C"
-            onChangeText={comment => this.setState({comment})}/>
+            onChangeText={comment => this.setState({comment})}
+            value={this.state.comment}
+            />
           <View style={styles.container_loginBtn}>
           <Mutation mutation={createComment}>
-          {(addDogMutation, { data }) => (
+          {(createComment, { data }) => (
             <TouchableOpacity style={styles.loginBtn} onPress={() => {
-              addDogMutation({
+              createComment({
               variables: {
-                comment: this.state.comment,
-                name: this.state.name,
-                id:1
+                text: this.state.comment,
+                name: "익명",
+                book_id:"1"
               }
             })
               .then(res => res)
