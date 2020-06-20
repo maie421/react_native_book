@@ -53,8 +53,8 @@ mutation Comment($name: String, $text: String!,$book_id:ID!) {
 
 `
 const QueryCommnet=gql `
-{
-  book(bookisnb:"123"){
+query Book($bookisnb: String) {
+  book(bookisnb:$bookisnb){
     id
     suggest
     comments{
@@ -125,6 +125,11 @@ export default class RecipeScreen extends React.Component {
          <Query
           query={QueryCommnet}>
         {({loading, error, data}) => {
+          ({
+            variables: {
+              bookisnb:item.isbn,
+            }
+          });
           if (loading) return <Text>'Loading...'</Text>
           if (error) return <Text>'Error! ${error.message}'</Text>
           //console.log(data.suggest);
