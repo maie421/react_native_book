@@ -12,7 +12,7 @@ import styles from './styles';
 import BackButton from '../../components/BackButton/BackButton';
 import { gql } from "apollo-boost";
 import { Query ,Mutation,graphql} from 'react-apollo';
-
+import { useQuery } from '@apollo/react-hooks';
 const story = [
   {
     title:'그려',
@@ -66,6 +66,7 @@ query Book($bookisnb: String) {
 }
 }
 `
+
 export default class RecipeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -80,13 +81,14 @@ export default class RecipeScreen extends React.Component {
     };
   };
 
-  
   constructor(props) {
     super(props);
     this.state = {
       activeSlide: 0,
       comment:"",
       name:"",
+      bookisnb:"",
+      CommentList:[],
     };
   }
     
@@ -110,8 +112,8 @@ export default class RecipeScreen extends React.Component {
   );
   render() {
     const { navigation } = this.props;
-    console.log(this.props);
     const item = navigation.getParam('item');
+    const bookisnb="123";
     return (
       <View style={styles.container}>
         <View style={styles.container_Side}>
@@ -122,24 +124,23 @@ export default class RecipeScreen extends React.Component {
           </View>
           {/* <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text> */}
         </View>
-         <Query
-          query={QueryCommnet}>
+        <Query query={QueryCommnet} variables={{ bookisnb }}>
         {({loading, error, data}) => {
-          ({
-            variables: {
-              bookisnb:item.isbn,
-            }
-          });
+          console.log(data);
+          // if (data!=undefined){
+          //    this.setState({
+          //     CommentList: { ...data.book.comments }
+          //     });
+          //  }
           if (loading) return <Text>'Loading...'</Text>
           if (error) return <Text>'Error! ${error.message}'</Text>
-          //console.log(data.suggest);
           return (
         <View style={styles.commentcontainer}>
-        <Text style={styles.title}>{data.book.suggest}</Text>
+        {data.book==undefined?<Text>댓글을 추가해주세요</Text>:<Text style={styles.title}>{data.book.suggest}</Text>}
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}
-          data={data.book.comments}
+          data={this.state.CommentList}
           renderItem={this.renderComment}
         //   keyExtractor={item => `${item.id}`}
         />
@@ -165,6 +166,7 @@ export default class RecipeScreen extends React.Component {
                 name: "익명",
                 book_id:"1"
               }
+             
             })
               .then(res => res)
               .catch(err => <Text>{err}</Text>);
