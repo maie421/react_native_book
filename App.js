@@ -4,7 +4,7 @@ import ApolloClient from "apollo-boost"
 import { ApolloProvider } from "react-apollo"
 
 const client = new ApolloClient({
-  uri: "http://a56769c02455.ngrok.io/graphql",
+  uri: "http://33574e20d48b.ngrok.io/graphql",
 })
 
 export default function App() {

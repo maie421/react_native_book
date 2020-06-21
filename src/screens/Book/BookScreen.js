@@ -103,9 +103,9 @@ export default class RecipeScreen extends React.Component {
         </View >
           <Text rkType='primary3 mediumLine'>{item.text}</Text>
           <View style={styles.container_loginBtn}>
-          <TouchableOpacity style={styles.DeleteBtn} onPress={() => {this.Login()}}>
+          {/* <TouchableOpacity style={styles.DeleteBtn} onPress={() => {this.Login()}}>
               <Text style={styles.loginText}>삭제</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           </View>
         </View>
     </View>
@@ -113,7 +113,7 @@ export default class RecipeScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item');
-    const bookisnb="123";
+    const bookisnb=item.isbn;
     return (
       <View style={styles.container}>
         <View style={styles.container_Side}>
@@ -126,7 +126,7 @@ export default class RecipeScreen extends React.Component {
         </View>
         <Query query={QueryCommnet} variables={{ bookisnb }}>
         {({loading, error, data}) => {
-          console.log(data);
+          // this.setState({book_id:data.book.id});
           // if (data!=undefined){
           //    this.setState({
           //     CommentList: { ...data.book.comments }
@@ -140,7 +140,7 @@ export default class RecipeScreen extends React.Component {
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}
-          data={this.state.CommentList}
+          data={data.book==undefined ? undefined: data.book.comments} 
           renderItem={this.renderComment}
         //   keyExtractor={item => `${item.id}`}
         />
@@ -164,9 +164,8 @@ export default class RecipeScreen extends React.Component {
               variables: {
                 text: this.state.comment,
                 name: "익명",
-                book_id:"1"
+                book_id:1,
               }
-             
             })
               .then(res => res)
               .catch(err => <Text>{err}</Text>);
